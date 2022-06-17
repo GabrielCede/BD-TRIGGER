@@ -1,0 +1,82 @@
+/*===============================================ECKERD GABRIEL CEDEÑO SÁNCHEZ 5TO "B"================================================================*/
+
+
+
+/*==============CREACIÓN DE TABLAS Y LLAVES FORANEAS================*/
+
+
+/*==============================================================*/
+/* Table: ESTUDIANTE                                            */
+/*==============================================================*/
+create table ESTUDIANTE (
+   ID_ESTUDIANTE        INT4                 not null,
+   NOMBRE               VARCHAR(20)          null,
+   APELLIDO             VARCHAR(20)          null,
+   FECHA_INGRESO        DATE                 null,
+   NUM_REPETICIONES     INT2                 null,
+   constraint PK_ESTUDIANTE primary key (ID_ESTUDIANTE)
+);
+
+/*==============================================================*/
+/* Index: ESTUDIANTE_PK                                         */
+/*==============================================================*/
+create unique index ESTUDIANTE_PK on ESTUDIANTE (
+ID_ESTUDIANTE
+);
+
+/*==============================================================*/
+/* Table: MATRICULA                                             */
+/*==============================================================*/
+create table MATRICULA (
+   ID_MATRICULA         INT4                 not null,
+   ID_ESTUDIANTE        INT4                 not null,
+   FECHA_MATRICULA      DATE                 null,
+   NIVEL                INT2                 null,
+   constraint PK_MATRICULA primary key (ID_MATRICULA)
+);
+
+/*==============================================================*/
+/* Index: MATRICULA_PK                                          */
+/*==============================================================*/
+create unique index MATRICULA_PK on MATRICULA (
+ID_MATRICULA
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_1_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_1_FK on MATRICULA (
+ID_ESTUDIANTE
+);
+
+alter table MATRICULA
+   add constraint FK_MATRICUL_RELATIONS_ESTUDIAN foreign key (ID_ESTUDIANTE)
+      references ESTUDIANTE (ID_ESTUDIANTE)
+      on delete restrict on update restrict;
+      
+      
+      
+      
+      
+	  
+	  
+	  
+                    /*==============================================================*/
+                    /* 			INGRESO DE DATOS                                    */
+                    /*==============================================================*/
+
+
+/* 		DATOS Estudiante                                    */
+
+INSERT INTO estudiante VALUES('1','Roberth','Moreira','2001/01/21','0');
+
+
+
+/* 		DATOS Matricula                                    */
+
+INSERT INTO matricula VALUES('100','1','2001/01/21','1');
+INSERT INTO matricula VALUES('120','1','2001/07/21','1');
+
+
+
+/* Crear un Trigger que aumente el número de repetciones si el estudiante vuelve a cursar el mismo nivel*/
